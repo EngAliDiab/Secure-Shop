@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Products</h1>
+<form method="get" class="filters">
+<input name="q" value="{{ q }}" placeholder="Search products" maxlength="80" aria-label="Search">
+<select name="category" aria-label="Category"><option value="">All categories</option>
+{% for c in cats %}<option value="{{ c }}" {{ 'selected' if c == cat }}>{{ c }}</option>{% endfor %}</select>
+<input name="min" value="{{ lo }}" inputmode="numeric" placeholder="Min $" aria-label="Minimum price">
+<input name="max" value="{{ hi }}" inputmode="numeric" placeholder="Max $" aria-label="Maximum price">
+<button>Filter</button></form>
+{% if q %}<p>Results for “{{ q }}”</p>{% endif %}
+<div class="grid">{% for p in products %}
+<article class="card"><h2><a href="{{ url_for('shop.product', pid=p.id) }}">{{ p.name }}</a></h2>
+<p class="muted">{{ p.category }}</p><p class="price">{{ p.price_cents|money }}</p></article>
+{% else %}<p>No products match. Try clearing the filters.</p>{% endfor %}</div>
+{% endblock %}

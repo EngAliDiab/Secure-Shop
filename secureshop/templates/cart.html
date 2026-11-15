@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Cart{% endblock %}
+{% block content %}<h1>Your cart</h1>
+{% if items %}
+<div class="scroll"><table><tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr>
+{% for i in items %}<tr><td>{{ i.name }}</td><td>{{ i.price_cents|money }}</td>
+<td><form method="post" action="{{ url_for('shop.cart_update') }}" class="row">{{ csrf_field() }}
+<input type="hidden" name="product_id" value="{{ i.product_id }}">
+<input type="number" name="qty" value="{{ i.qty }}" min="1" max="10" aria-label="Quantity"><button>Update</button></form></td>
+<td>{{ (i.price_cents * i.qty)|money }}</td>
+<td><form method="post" action="{{ url_for('shop.cart_remove') }}">{{ csrf_field() }}
+<input type="hidden" name="product_id" value="{{ i.product_id }}"><button class="link">Remove</button></form></td></tr>{% endfor %}</table></div>
+<form method="post" action="{{ url_for('shop.coupon_apply') }}" class="row">{{ csrf_field() }}
+<label for="code">Coupon</label><input id="code" name="code" maxlength="40"><button>Apply</button></form>
+<dl class="totals"><dt>Subtotal</dt><dd>{{ subtotal|money }}</dd>
+{% if coupon %}<dt>Coupon {{ coupon.code }} ({{ coupon.percent }}%)</dt><dd>-{{ discount|money }}</dd>{% endif %}
+<dt>Total</dt><dd><strong>{{ total|money }}</strong></dd><dt>Store credit</dt><dd>{{ g.user.credit_cents|money }}</dd></dl>
+<form method="post" action="{{ url_for('shop.checkout') }}">{{ csrf_field() }}<button class="primary">Pay with store credit</button></form>
+{% else %}<p>Your cart is empty. <a href="{{ url_for('shop.index') }}">Browse products</a></p>{% endif %}
+{% endblock %}

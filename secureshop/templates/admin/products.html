@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Products{% endblock %}
+{% block content %}<h1>Products</h1>
+<form method="post" action="{{ url_for('admin.product_create') }}" class="row">{{ csrf_field() }}
+<input name="name" placeholder="Name" required><input name="category" placeholder="Category" required>
+<input name="description" placeholder="Description"><input name="price" placeholder="Price" size="7" required><input name="stock" placeholder="Stock" size="5" required>
+<button>Add product</button></form>
+<div class="scroll"><table>{% for p in products %}<tr><td>
+<form method="post" action="{{ url_for('admin.product_update', pid=p.id) }}" class="row">{{ csrf_field() }}
+<input name="name" value="{{ p.name }}" aria-label="Name"><input name="category" value="{{ p.category }}" aria-label="Category">
+<input name="description" value="{{ p.description }}" aria-label="Description">
+<input name="price" value="{{ '%.2f' % (p.price_cents / 100) }}" size="7" aria-label="Price"><input name="stock" value="{{ p.stock }}" size="5" aria-label="Stock">
+<select name="active" aria-label="Visibility"><option value="1" {{ 'selected' if p.active }}>visible</option><option value="0" {{ 'selected' if not p.active }}>hidden</option></select>
+<button>Save</button></form></td><td>
+<form method="post" action="{{ url_for('admin.product_delete', pid=p.id) }}">{{ csrf_field() }}<button class="link">Delete</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

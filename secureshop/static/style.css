@@ -1,0 +1,26 @@
+:root{--ink:#16232b;--paper:#f3f6f8;--card:#fff;--line:#d3dde3;--accent:#0a6a66;--bad:#a4262c;--ok:#1b6b3a;--muted:#5d6e78}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,.brand{font-family:Georgia,"Iowan Old Style",serif;font-weight:700;line-height:1.2}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:center;justify-content:space-between;padding:.8rem 1.25rem;background:var(--ink)}
+.bar a,.bar .link{color:#fff;text-decoration:none}.brand{font-size:1.4rem}
+nav{display:flex;flex-wrap:wrap;gap:.25rem 1.1rem;align-items:center}
+main{max-width:64rem;margin:0 auto;padding:1.5rem 1.25rem}.narrow{max-width:32rem}
+a{color:var(--accent)}.muted{color:var(--muted);margin:.2rem 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:1rem}
+.card{background:var(--card);border:1px solid var(--line);padding:1rem;border-radius:6px}.card h2{font-size:1.1rem;margin:0}
+.price{font-size:1.25rem;font-weight:700;margin:.4rem 0}
+input,select,button{font:inherit;padding:.5rem .7rem;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);max-width:100%}
+button{background:var(--accent);color:#fff;border-color:var(--accent);cursor:pointer}
+button.link{background:none;border:0;color:var(--accent);padding:0;text-decoration:underline}.bar button.link{color:#fff}
+button.primary{padding:.7rem 1.4rem}
+:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.5rem 0}.inline{display:inline}
+.stack{display:flex;flex-direction:column;gap:.5rem}.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:2rem}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;background:var(--card)}
+th,td{padding:.55rem .7rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.totals{display:grid;grid-template-columns:1fr auto;gap:.3rem 2rem;max-width:22rem;margin:1rem 0}.totals dd{margin:0;text-align:right}
+.flash{padding:.7rem 1rem;border-radius:5px;border:1px solid}.flash.ok{background:#e5f3ea;border-color:var(--ok)}.flash.error{background:#fbe9ea;border-color:var(--bad)}
+footer{border-top:1px solid var(--line);padding:1rem 1.25rem;max-width:64rem;margin:2rem auto 0}
+@media (max-width:600px){input,select{width:100%}.row button{width:100%}}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Coupons{% endblock %}
+{% block content %}<h1>Coupons</h1>
+<form method="post" action="{{ url_for('admin.coupon_create') }}" class="row">{{ csrf_field() }}
+<input name="code" placeholder="Code (blank = random)"><input name="percent" placeholder="% off" size="5" required>
+<input name="max_uses" placeholder="Max uses" size="6" required><input name="days" placeholder="Valid days" size="6" required><button>Create coupon</button></form>
+<div class="scroll"><table>{% for c in coupons %}<tr><td><strong>{{ c.code }}</strong><br><span class="muted">used {{ c.used_count }}/{{ c.max_uses }}{% if c.bound_email %} · {{ c.bound_email }}{% endif %}</span></td><td>
+<form method="post" action="{{ url_for('admin.coupon_update', cid=c.id) }}" class="row">{{ csrf_field() }}
+<input name="percent" value="{{ c.percent }}" size="4" aria-label="Percent"><input name="max_uses" value="{{ c.max_uses }}" size="6" aria-label="Max uses">
+<select name="active" aria-label="Status"><option value="1" {{ 'selected' if c.active }}>active</option><option value="0" {{ 'selected' if not c.active }}>disabled</option></select><button>Save</button></form></td><td>
+<form method="post" action="{{ url_for('admin.coupon_delete', cid=c.id) }}">{{ csrf_field() }}<button class="link">Delete</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Users{% endblock %}
+{% block content %}<h1>Users</h1>
+<form method="post" action="{{ url_for('admin.user_create') }}" class="row">{{ csrf_field() }}
+<input name="name" placeholder="Name" required><input name="email" type="email" placeholder="Email" required>
+<input name="password" type="password" placeholder="Password (10+)" required minlength="10">
+<select name="role"><option>user</option><option>admin</option></select><button>Create user</button></form>
+<div class="scroll"><table>{% for u in users %}<tr><td colspan="2">
+<form method="post" action="{{ url_for('admin.user_update', uid=u.id) }}" class="row">{{ csrf_field() }}
+<input name="name" value="{{ u.name }}" aria-label="Name"><input name="email" value="{{ u.email }}" aria-label="Email">
+<select name="role" aria-label="Role"><option {{ 'selected' if u.role == 'user' }}>user</option><option {{ 'selected' if u.role == 'admin' }}>admin</option></select>
+<input name="credit" value="{{ '%.2f' % (u.credit_cents / 100) }}" size="8" aria-label="Credit">
+<select name="active" aria-label="Status"><option value="1" {{ 'selected' if u.active }}>active</option><option value="0" {{ 'selected' if not u.active }}>disabled</option></select>
+<button>Save</button></form></td><td>
+<form method="post" action="{{ url_for('admin.user_delete', uid=u.id) }}">{{ csrf_field() }}<button class="link">Delete</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

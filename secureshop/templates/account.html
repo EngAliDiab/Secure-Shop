@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}Account{% endblock %}
+{% block content %}<h1>Your account</h1>
+<p>Store credit: <strong>{{ g.user.credit_cents|money }}</strong></p>
+<div class="cols"><form method="post" action="{{ url_for('auth.update_profile') }}" class="stack"><h2>Profile</h2>{{ csrf_field() }}
+<label for="n">Name</label><input id="n" name="name" value="{{ g.user.name }}" required maxlength="60">
+<label for="e">Email</label><input id="e" type="email" name="email" value="{{ g.user.email }}" required>
+<label for="cp">Current password (only to change email)</label><input id="cp" type="password" name="current_password" autocomplete="current-password">
+<button>Save profile</button></form>
+<form method="post" action="{{ url_for('auth.change_password') }}" class="stack"><h2>Password</h2>{{ csrf_field() }}
+<label for="c1">Current password</label><input id="c1" type="password" name="current_password" required autocomplete="current-password">
+<label for="c2">New password</label><input id="c2" type="password" name="new_password" required minlength="10" maxlength="128" autocomplete="new-password">
+<label for="c3">Confirm new password</label><input id="c3" type="password" name="confirm_password" required autocomplete="new-password">
+<button>Change password</button></form></div>
+<h2>Order history</h2>
+{% if orders %}<div class="scroll"><table><tr><th>Order</th><th>Date</th><th>Total</th></tr>
+{% for o in orders %}<tr><td><a href="{{ url_for('shop.order', oid=o.id) }}">#{{ o.id }}</a></td><td>{{ o.created_at|date }}</td><td>{{ o.total_cents|money }}</td></tr>{% endfor %}</table></div>
+{% else %}<p>No orders yet.</p>{% endif %}{% endblock %}

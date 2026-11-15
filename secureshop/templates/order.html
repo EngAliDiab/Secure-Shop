@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Order #{{ o.id }}{% endblock %}
+{% block content %}<section class="narrow"><h1>Order #{{ o.id }} confirmed</h1><p class="muted">Placed {{ o.created_at|date }} UTC</p>
+<div class="scroll"><table><tr><th>Item</th><th>Qty</th><th>Price</th></tr>
+{% for i in items %}<tr><td>{{ i.name }}</td><td>{{ i.qty }}</td><td>{{ (i.unit_price_cents * i.qty)|money }}</td></tr>{% endfor %}</table></div>
+<dl class="totals"><dt>Subtotal</dt><dd>{{ o.subtotal_cents|money }}</dd>
+{% if o.coupon_code %}<dt>Coupon {{ o.coupon_code }}</dt><dd>-{{ o.discount_cents|money }}</dd>{% endif %}
+<dt>Paid with store credit</dt><dd><strong>{{ o.total_cents|money }}</strong></dd></dl></section>{% endblock %}

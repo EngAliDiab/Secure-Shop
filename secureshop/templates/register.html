@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Register{% endblock %}
+{% block content %}<section class="narrow"><h1>Create an account</h1>
+<form method="post" class="stack">{{ csrf_field() }}
+<label for="name">Name</label><input id="name" name="name" required maxlength="60" autocomplete="name">
+<label for="email">Email</label><input id="email" type="email" name="email" required autocomplete="email">
+<label for="pw">Password (10+ characters)</label><input id="pw" type="password" name="password" required minlength="10" maxlength="128" autocomplete="new-password">
+<button class="primary">Create account</button></form></section>{% endblock %}
